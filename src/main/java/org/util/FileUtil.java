@@ -17,6 +17,10 @@ public class FileUtil {
         return Files.lines(new File(path).toPath()).collect(Collectors.joining(System.lineSeparator()));
     }
 
+//    public static byte[] readToFile(String path){
+//            return Files.readAllBytes(Paths.get(path));
+//    }
+
     /**
      * String 을 특정 path 파일에 create (append 시에는 StandardOpenOption 변경)
      * */
