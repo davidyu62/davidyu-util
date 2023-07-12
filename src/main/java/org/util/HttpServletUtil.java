@@ -18,10 +18,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class HttpServletUtil {
-
-    /**
-     *  get body Method.POST
-     * */
     public static String readBody(HttpServletRequest req){
         BufferedReader bufferedReader = null;
         StringBuilder stringBuilder = new StringBuilder();
@@ -44,8 +40,7 @@ public class HttpServletUtil {
         }
         return body;
     }
-
-    public static void httpClientCall(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String uri, String method, Map<String,String> headers){
+    public static void httpClientCall(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String uri, String method, Map<String,String> headers, String content){
         HttpClient httpClient = new HttpClient();
         try {
             httpClient.start();
@@ -57,7 +52,12 @@ public class HttpServletUtil {
                 }
                 contentRes = request.method(HttpMethod.GET).send();
             }else if(httpServletRequest.getMethod().equals("POST")){
-                if(headers != null) 	setHeader(request,headers);
+                if(headers != null) 	{
+                    setHeader(request,headers);
+                }
+                if(content != null)     {
+                    request.content(new StringContentProvider(new Gson().toJson(content),"utf-8"));
+                }
                 contentRes = request.method(HttpMethod.POST).send();
             }
 
@@ -75,7 +75,6 @@ public class HttpServletUtil {
             }
         }
     }
-
     private static void setHeader(Request request, Map<String, String> headers) {
         Iterator iter = headers.keySet().iterator();
         while(iter.hasNext()) {
