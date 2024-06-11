@@ -17,6 +17,10 @@ public class FileUtil {
         return Files.lines(new File(path).toPath()).collect(Collectors.joining(System.lineSeparator()));
     }
 
+    public static List<String> readFile(String path) throws IOException{
+        return Files.readAllLines(Paths.get(path));
+    }
+
 //    public static byte[] readToFile(String path){
 //            return Files.readAllBytes(Paths.get(path));
 //    }
